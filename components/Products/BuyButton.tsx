@@ -1,10 +1,10 @@
 import { FindReferenceError, findReference } from '@solana/pay'
 import { Keypair, Transaction } from '@solana/web3.js'
 import React, { useEffect, useMemo, useState } from 'react'
+import { addOrder, fetchItem, hasPurchased } from '../../lib/api'
 import { useConnection, useWallet } from '@solana/wallet-adapter-react'
 
 import IPFSDownload from '../IpfsDownload'
-import { addOrder } from '../../lib/api'
 
 const STATUS = {
   Initial: 'Initial',
@@ -21,6 +21,7 @@ export const BuyButton = (props: BuyButtonProps) => {
   const { publicKey, sendTransaction } = useWallet()
   const orderID = useMemo(() => Keypair.generate().publicKey, []) // Public key used to identify the order
 
+  const [item, setItem] = useState<any>(null) // IPFS hash & filename of the purchased item
   const [loading, setLoading] = useState(false)
   const [status, setStatus] = useState(STATUS.Initial) // Tracking transaction status
 
@@ -67,6 +68,22 @@ export const BuyButton = (props: BuyButtonProps) => {
   }
 
   useEffect(() => {
+    // Check if this address already has already purchased this item
+    // If so, fetch the item and set paid to true
+    // Async function to avoid blocking the UI
+    async function checkPurchased() {
+      const purchased = await hasPurchased(`${publicKey}`, itemID)
+      if (purchased) {
+        setStatus(STATUS.Paid)
+        const item = await fetchItem(itemID)
+        setItem(item)
+        console.log('Address has already purchased this item!')
+      }
+    }
+    if (publicKey && itemID) checkPurchased()
+  }, [publicKey, itemID])
+
+  useEffect(() => {
     // Check if transaction was confirmed
     if (status === STATUS.Submitted) {
       setLoading(true)
@@ -103,6 +120,15 @@ export const BuyButton = (props: BuyButtonProps) => {
         clearInterval(interval)
       }
     }
+
+    async function getItem(itemID: string) {
+      const item = await fetchItem(itemID)
+      setItem(item)
+    }
+
+    if (status === STATUS.Paid) {
+      getItem(itemID)
+    }
   }, [status])
 
   if (!publicKey) {
@@ -120,10 +146,14 @@ export const BuyButton = (props: BuyButtonProps) => {
   return (
     <div>
       {status === STATUS.Paid ? (
-        <IPFSDownload
-          filename="emojis.zip"
-          hash="QmWWH69mTL66r3H8P4wUn24t1L5pvdTJGUTKBqT11KCHS5"
-        />
+        <>
+          {!!item && <IPFSDownload filename={item.filename} hash={item.hash} />}
+          {!item && (
+            <button disabled={true} className="buy-button">
+              Loading...
+            </button>
+          )}
+        </>
       ) : (
         <button
           disabled={loading}
