@@ -1,4 +1,5 @@
 import { AssetType } from '@models/asset'
+import BuyButton from './BuyButton'
 import { Product } from '@models/product'
 
 interface ProductCardProps extends Product {}
@@ -15,17 +16,21 @@ export const ProductCard = (props: ProductCardProps) => {
         </strong>
       </div>
 
-      <a href={`/products/${uuid}`} title={name}>
+      <a
+        href={`/products/${uuid}`}
+        title={name}
+        className="min-h-[280px] max-h-[280px] h-[280px]"
+      >
         {type === AssetType.Image && (
           <img
             alt={name}
             src={image_url}
-            className="object-cover w-full -mt-3 max-height-[227px]"
+            className="object-cover w-full -mt-3 min-h-[280px] max-h-[280px] h-[280px]]"
           />
         )}
         {type === AssetType.Video && (
           <video
-            className="clip h-56 w-full object-cover shadow-lg -mt-3"
+            className="clip w-full object-cover shadow-lg -mt-3 min-h-[280px] max-h-[280px] h-[280px]"
             autoPlay
             loop
             controls={false}
@@ -44,7 +49,11 @@ export const ProductCard = (props: ProductCardProps) => {
       <div className="flex items-center justify-between mt-4 font-bold">
         <p className="text-lg">{price} SOL</p>
 
-        <p className="text-xs tracking-wide uppercase">6 Colors</p>
+        <div className="text-xs tracking-wide uppercase">
+          <div className="block px-2 py-1 text-sm font-medium text-white transition bg-indigo-600 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring">
+            <BuyButton itemID={uuid} />
+          </div>
+        </div>
       </div>
     </div>
   )

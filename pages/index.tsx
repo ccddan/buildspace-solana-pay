@@ -1,16 +1,14 @@
-import { useConnection, useWallet } from '@solana/wallet-adapter-react'
 import { useEffect, useState } from 'react'
 
 import Head from '../components/Head'
-import IPFSDownload from '../components/IpfsDownload'
 import Navbar from '../components/Navbar'
 import type { NextPage } from 'next'
 import { Product } from '@models/product'
 import { ProductsCollection } from '../components/Products'
+import { useWallet } from '@solana/wallet-adapter-react'
 
 const Home: NextPage = () => {
   const { publicKey, connected } = useWallet()
-  const { connection } = useConnection()
   const [products, setProducts] = useState<Product[]>([])
 
   useEffect(() => {
@@ -31,9 +29,6 @@ const Home: NextPage = () => {
       <Head />
       <div className="bg-gray-900 text-slate-200">
         <Navbar />
-        <div className="container m-auto">
-          <IPFSDownload hash="<CID>" filename="<filename>" />
-        </div>
         <div className="container m-auto">
           {!connected && (
             <p className="text-center">
