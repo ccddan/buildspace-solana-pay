@@ -1,9 +1,16 @@
+import { FindReferenceError, findReference } from '@solana/pay'
 import { Keypair, Transaction } from '@solana/web3.js'
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useConnection, useWallet } from '@solana/wallet-adapter-react'
 
-import IPFSDownload from './../IpfsDownload'
+import IPFSDownload from '../IpfsDownload'
+import { addOrder } from '../../lib/api'
 
+const STATUS = {
+  Initial: 'Initial',
+  Submitted: 'Submitted',
+  Paid: 'Paid',
+}
 interface BuyButtonProps {
   itemID: string
 }
@@ -14,8 +21,8 @@ export const BuyButton = (props: BuyButtonProps) => {
   const { publicKey, sendTransaction } = useWallet()
   const orderID = useMemo(() => Keypair.generate().publicKey, []) // Public key used to identify the order
 
-  const [paid, setPaid] = useState(false)
-  const [loading, setLoading] = useState(false) // Loading state of all above
+  const [loading, setLoading] = useState(false)
+  const [status, setStatus] = useState(STATUS.Initial) // Tracking transaction status
 
   // useMemo is a React hook that only computes the value if the dependencies change
   const order = useMemo(
@@ -51,13 +58,52 @@ export const BuyButton = (props: BuyButtonProps) => {
         `Transaction sent: https://solscan.io/tx/${txHash}?cluster=devnet`
       )
       // Even though this could fail, we're just going to set it to true for now
-      setPaid(true)
+      setStatus(STATUS.Submitted)
     } catch (error) {
       console.error(error)
     } finally {
       setLoading(false)
     }
   }
+
+  useEffect(() => {
+    // Check if transaction was confirmed
+    if (status === STATUS.Submitted) {
+      setLoading(true)
+      const interval = setInterval(async () => {
+        try {
+          const result: any = await findReference(connection, orderID)
+          console.log('Find reference result:', result)
+          if (result.err) {
+            console.warn('Transaction failed:', result.err)
+            return null
+          }
+
+          console.log('Finding tx reference', result.confirmationStatus)
+          if (
+            result.confirmationStatus === 'confirmed' ||
+            result.confirmationStatus === 'finalized'
+          ) {
+            clearInterval(interval)
+            setStatus(STATUS.Paid)
+            addOrder(order)
+            setLoading(false)
+            alert('Thank you for your purchase!')
+          }
+        } catch (e) {
+          if (e instanceof FindReferenceError) {
+            return null
+          }
+          console.error('Unknown error', e)
+        } finally {
+          setLoading(false)
+        }
+      }, 1000)
+      return () => {
+        clearInterval(interval)
+      }
+    }
+  }, [status])
 
   if (!publicKey) {
     return (
@@ -73,7 +119,7 @@ export const BuyButton = (props: BuyButtonProps) => {
 
   return (
     <div>
-      {paid ? (
+      {status === STATUS.Paid ? (
         <IPFSDownload
           filename="emojis.zip"
           hash="QmWWH69mTL66r3H8P4wUn24t1L5pvdTJGUTKBqT11KCHS5"
