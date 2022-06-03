@@ -23,7 +23,7 @@ export const ProductsCollection = (props: ProductsCollectionProps) => {
         {!products.length && (
           <p>This category does not have products for sale.</p>
         )}
-        <div className="grid grid-cols-1 mt-8 md:grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-8">
+        <div className="grid grid-cols-1 mt-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-4 gap-y-8">
           {products.map((product: Product, idx: number) => (
             <ProductCard key={idx} {...product} />
           ))}
