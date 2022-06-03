@@ -47,7 +47,7 @@ export const ProductCard = (props: ProductCardProps) => {
       <p className="text-sm truncate">{description}</p>
 
       <div className="flex items-center justify-between mt-4 font-bold">
-        <p className="text-lg">{price} SOL</p>
+        <p className="text-lg">$ {price} USDC</p>
 
         <div className="text-xs tracking-wide uppercase">
           <div className="block px-2 py-1 text-sm font-medium text-white transition bg-indigo-600 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring">
