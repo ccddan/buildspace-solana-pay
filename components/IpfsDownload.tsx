@@ -14,7 +14,12 @@ const IPFSDownload = (props: IPFSDownloadProps) => {
     <div>
       {file ? (
         <div className="download-component">
-          <a className="download-button" href={file} download={filename}>
+          <a
+            className="download-button"
+            href={file}
+            download={filename}
+            target="_blank"
+          >
             Download
           </a>
         </div>
