@@ -2,11 +2,7 @@ import { WalletMultiButton } from '@solana/wallet-adapter-react-ui'
 import { useWallet } from '@solana/wallet-adapter-react'
 
 export const Navbar = () => {
-  const { publicKey } = useWallet()
-
-  const renderNotConnectedContainer = () => (
-    <WalletMultiButton className="block px-5 py-3 text-sm font-medium text-white transition bg-indigo-600 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring" />
-  )
+  const { publicKey, disconnect } = useWallet()
 
   return (
     <header>
@@ -21,7 +17,16 @@ export const Navbar = () => {
           </div>
 
           <div className="flex flex-col gap-4 mt-4 sm:flex-row sm:mt-0 sm:items-center">
-            {publicKey ? 'Connected!' : renderNotConnectedContainer()}
+            {publicKey ? (
+              <button
+                className="block px-5 py-3 text-sm font-medium text-white transition bg-indigo-600 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring"
+                onClick={disconnect}
+              >
+                Logout
+              </button>
+            ) : (
+              <WalletMultiButton className="block px-5 py-3 text-sm font-medium text-white transition bg-indigo-600 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring" />
+            )}
           </div>
         </div>
       </div>
