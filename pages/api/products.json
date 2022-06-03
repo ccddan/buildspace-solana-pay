@@ -1,0 +1,42 @@
+[
+  {
+    "uuid": "5f2042c3-d404-40e1-9522-19b879b228c0",
+    "name": "Who's next?",
+    "price": "10.5",
+    "description": "Get this fire emoji pack for only $0.09! Includes 3 hot emojis: Forreal, Flooshed, and Sheesh!",
+    "image_url": "https://i.imgur.com/S7HfKPb.mp4",
+    "type": "video",
+    "filename": "Emojis.zip",
+    "hash": "QmWWH69mTL66r3H8P4wUn24t1L5pvdTJGUTKBqT11KCHS5"
+  },
+  {
+    "uuid": "b7dfa0dd-0733-4fb1-a05b-9d9be22fc1e7",
+    "name": "My new favorite emoji",
+    "price": "7.7",
+    "description": "Get this fire emoji pack for only $0.09! Includes 3 hot emojis: Forreal, Flooshed, and Sheesh!",
+    "image_url": "https://i.imgur.com/WBTJ1Ta_d.webp?maxwidth=760&fidelity=grand",
+    "type": "image",
+    "filename": "Emojis.zip",
+    "hash": "QmWWH69mTL66r3H8P4wUn24t1L5pvdTJGUTKBqT11KCHS5"
+  },
+  {
+    "uuid": "d5f7c35d-09f2-49ac-aba8-e05e9106e8b5",
+    "name": "OG Emoji pack",
+    "price": "1",
+    "description": "Get this fire emoji pack for only $0.09! Includes 3 hot emojis: Forreal, Flooshed, and Sheesh!",
+    "image_url": "https://i.imgur.com/rVD8bjt.png",
+    "type": "image",
+    "filename": "Emojis.zip",
+    "hash": "QmWWH69mTL66r3H8P4wUn24t1L5pvdTJGUTKBqT11KCHS5"
+  },
+  {
+    "uuid": "ee928664-16e7-4050-bf6f-532f6863c278",
+    "name": "Anya Spy x Family Smug",
+    "price": "2.1",
+    "description": "Get this fire emoji pack for only $0.09! Includes 3 hot emojis: Forreal, Flooshed, and Sheesh!. Get this fire emoji pack for only $0.09! Includes 3 hot emojis: Forreal, Flooshed, and Sheesh!. Get this fire emoji pack for only $0.09! Includes 3 hot emojis: Forreal, Flooshed, and Sheesh!",
+    "image_url": "https://i.imgur.com/ryyQZ5A.png",
+    "type": "image",
+    "filename": "Emojis.zip",
+    "hash": "QmWWH69mTL66r3H8P4wUn24t1L5pvdTJGUTKBqT11KCHS5"
+  }
+]
