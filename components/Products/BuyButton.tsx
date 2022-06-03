@@ -68,7 +68,7 @@ export const BuyButton = (props: BuyButtonProps) => {
   }
 
   if (loading) {
-    return <span>Loading...</span>
+    return <span>Buying...</span>
   }
 
   return (
