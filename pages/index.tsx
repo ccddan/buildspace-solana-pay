@@ -35,7 +35,17 @@ const Home: NextPage = () => {
           <IPFSDownload hash="<CID>" filename="<filename>" />
         </div>
         <div className="container m-auto">
-          <ProductsCollection category="Emojis" products={products} />
+          {!connected && (
+            <p className="text-center">
+              Connect with you wallet to see all available products
+            </p>
+          )}
+          {!!connected && (
+            <>
+              <ProductsCollection category="Emojis" products={products} />
+              <ProductsCollection category="Goods" products={[]} />
+            </>
+          )}
         </div>
       </div>
     </>
