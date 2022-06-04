@@ -17,7 +17,8 @@ import products from './products.json'
 const usdcAddress = new PublicKey(
   'Gh9ZwEmdLJ8DscKNTkTqPbNwLNNBjuSzaG9Vp2KGtKJr'
 )
-const sellerAddress = 'ZDn2SL19B66HC5RPuLJZXrP423XjTa62K1U7ohoLL4N'
+const sellerAddress =
+  process.env.NEXT_PUBLIC_OWNER_PUBLIC_KEY || 'Seller-Address-Not-Defined'
 const sellerPublicKey = new PublicKey(sellerAddress)
 
 const createTransaction = async (req: any, res: any) => {
