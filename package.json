@@ -3,7 +3,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "release": "npm run build && next export"
   },
   "dependencies": {
     "@solana/pay": "^0.2.0",
